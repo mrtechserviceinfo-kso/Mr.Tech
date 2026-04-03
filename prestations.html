@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr.Tech — Galerie Prestations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+         :root {
+            --gold: #C9A84C;
+            --gold-light: #E8C97A;
+            --gold-dark: #9A7A2E;
+            --black: #0A0A0A;
+            --dark: #111111;
+            --dark2: #1A1A1A;
+            --dark3: #222222;
+            --white: #F5F5F0;
+            --white2: #E8E8E0;
+            --grey: #888880;
+            --grey2: #555550;
+        }
+        
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        
+        body {
+            font-family: 'Barlow', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+        /* NOISE */
+        
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.4;
+        }
+        
+         ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+         ::-webkit-scrollbar-track {
+            background: var(--dark);
+        }
+        
+         ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 3px;
+        }
+        /* ─── NAV ─── */
+        
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 clamp(4vw, 8vw, 6%);
+            height: clamp(60px, 12vw, 72px);
+            background: rgba(10, 10, 10, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+        }
+        
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        
+        .nav-logo-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold-light));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .nav-logo-icon svg {
+            width: 22px;
+            height: 22px;
+            fill: var(--black);
+        }
+        
+        .nav-logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: 0.03em;
+        }
+        
+        .nav-logo-text span {
+            color: var(--gold);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--grey);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+        
+        .nav-cta {
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+            color: var(--black) !important;
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 700 !important;
+        }
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+        }
+        
+        .hamburger span {
+            display: block;
+            width: 26px;
+            height: 2px;
+            background: var(--gold);
+            border-radius: 1px;
+        }
+        /* ─── PAGE HERO ─── */
+        
+        .page-hero {
+            padding-top: clamp(80px, 14vw, 100px);
+            padding-bottom: 60px;
+            padding-left: clamp(4vw, 8vw, 6%);
+            padding-right: clamp(4vw, 8vw, 6%);
+            background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201, 168, 76, 0.08) 0%, transparent 70%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0.3;
+        }
+        
+        .page-hero-grid {
+            position: absolute;
+            inset: 0;
+            opacity: 0.04;
+            background-image: linear-gradient(var(--gold) 1px, transparent 1px), linear-gradient(90deg, var(--gold) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+        
+        .breadcrumb {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--grey);
+            margin-bottom: 20px;
+        }
+        
+        .breadcrumb a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        .breadcrumb svg {
+            width: 12px;
+            height: 12px;
+            stroke: var(--grey2);
+            fill: none;
+            stroke-width: 2;
+        }
+        
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            font-weight: 900;
+            color: var(--white);
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-title .accent {
+            color: var(--gold);
+        }
+        
+        .page-sub {
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--grey);
+            max-width: 560px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+        /* ─── SECTION TABS / ANCHORS ─── */
+        
+        .section-nav {
+            position: sticky;
+            top: clamp(60px, 12vw, 72px);
+            z-index: 800;
+            background: rgba(17, 17, 17, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(201, 168, 76, 0.12);
+            overflow-x: auto;
+        }
+        
+        .section-nav::-webkit-scrollbar {
+            height: 3px;
+        }
+        
+        .section-nav::-webkit-scrollbar-thumb {
+            background: var(--gold);
+        }
+        
+        .section-nav-inner {
+            display: flex;
+            align-items: center;
+            padding: 0 clamp(4vw, 6vw, 6%);
+            gap: 0;
+            white-space: nowrap;
+        }
+        
+        .snav-tab {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 24px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--grey);
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: color 0.3s, border-color 0.3s;
+            flex-shrink: 0;
+        }
+        
+        .snav-tab svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.8;
+        }
+        
+        .snav-tab:hover {
+            color: var(--gold-light);
+        }
+        
+        .snav-tab.active {
+            color: var(--gold);
+            border-bottom-color: var(--gold);
+        }
+        /* ─── SECTION BLOCK ─── */
+        
+        .prestation-section {
+            padding: clamp(60px, 12vw, 100px) clamp(4vw, 8vw, 6%);
+            position: relative;
+        }
+        
+        .prestation-section:nth-child(even) {
+            background: var(--dark);
+        }
+        
+        .prestation-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.25), transparent);
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 28px;
+            margin-bottom: 56px;
+        }
+        
+        .section-icon-big {
+            flex-shrink: 0;
+            width: 64px;
+            height: 64px;
+            background: rgba(201, 168, 76, 0.1);
+            border: 1px solid rgba(201, 168, 76, 0.3);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .section-icon-big svg {
+            width: 30px;
+            height: 30px;
+            stroke: var(--gold);
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        
+        .section-header-text {
+            flex: 1;
+        }
+        
+        .section-tag {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 10px;
+        }
+        
+        .section-desc {
+            font-size: 0.92rem;
+            font-weight: 300;
+            color: var(--grey);
+            line-height: 1.7;
+            max-width: 600px;
+        }
+        
+        .gold-line {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold-dark));
+            margin-top: 14px;
+        }
+        /* ─── IMAGE GRID ─── */
+        
+        .img-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(clamp(160px, 22vw, 220px), 1fr));
+            gap: 16px;
+        }
+        
+        .img-card {
+            position: relative;
+            background: var(--dark2);
+            border: 1px solid rgba(201, 168, 76, 0.12);
+            border-radius: 12px;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .img-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(201, 168, 76, 0.4);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(201, 168, 76, 0.1);
+        }
+        
+        .img-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s, opacity 0.3s;
+            opacity: 1;
+        }
+        
+        .img-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .img-card-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: var(--grey2);
+            font-size: 0.78rem;
+            font-family: 'Barlow Condensed', sans-serif;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: opacity 0.3s;
+        }
+        
+        .img-card.has-img .img-card-placeholder {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .img-card-placeholder svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--grey2);
+            fill: none;
+            stroke-width: 1.4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: stroke 0.3s, transform 0.3s;
+        }
+        
+        .img-card:hover .img-card-placeholder svg {
+            stroke: var(--gold);
+            transform: scale(1.1);
+        }
+        
+        .img-card:hover .img-card-placeholder {
+            color: var(--gold-light);
+        }
+        
+        .img-card-num {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--grey2);
+            background: rgba(10, 10, 10, 0.7);
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(201, 168, 76, 0.15);
+            transition: opacity 0.3s;
+        }
+        
+        .img-card.has-img .img-card-num {
+            opacity: 0;
+        }
+        
+        .img-card-actions {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            display: flex;
+            gap: 6px;
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+        
+        .img-card:hover .img-card-actions {
+            opacity: 1;
+        }
+        
+        .img-action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid rgba(201, 168, 76, 0.35);
+            background: rgba(10, 10, 10, 0.82);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        
+        .img-action-btn:hover {
+            background: rgba(201, 168, 76, 0.2);
+            border-color: var(--gold);
+        }
+        
+        .img-action-btn svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--white);
+            fill: none;
+            stroke-width: 1.8;
+        }
+        
+        .img-action-btn.del:hover svg {
+            stroke: #e05c5c;
+        }
+        
+        .hidden-input {
+            display: none;
+        }
+        /* Overlay on click */
+        
+        .img-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.0);
+            transition: background 0.3s;
+        }
+        
+        .img-card:hover .img-card-overlay {
+            background: rgba(10, 10, 10, 0.15);
+        }
+        /* ─── LIGHTBOX ─── */
+        
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 5000;
+            background: rgba(0, 0, 0, 0.92);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            backdrop-filter: blur(8px);
+        }
+        
+        .lightbox.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            transform: scale(0.92);
+            transition: transform 0.35s;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+        }
+        
+        .lightbox.open img {
+            transform: scale(1);
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid rgba(201, 168, 76, 0.3);
+            background: rgba(10, 10, 10, 0.7);
+            color: var(--white);
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        
+        .lightbox-close:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+        
+        .lightbox-caption {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.82rem;
+            letter-spacing: 0.1em;
+            color: var(--grey);
+            text-transform: uppercase;
+            background: rgba(10, 10, 10, 0.7);
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(201, 168, 76, 0.15);
+        }
+        /* ─── BACK TO TOP + CTA ─── */
+        
+        .page-footer-cta {
+            padding: clamp(60px, 12vw, 100px) clamp(4vw, 8vw, 6%);
+            text-align: center;
+            background: var(--dark);
+            border-top: 1px solid rgba(201, 168, 76, 0.15);
+        }
+        
+        .page-footer-cta h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 14px;
+        }
+        
+        .page-footer-cta p {
+            font-size: 0.95rem;
+            color: var(--grey);
+            max-width: 480px;
+            margin: 0 auto 36px;
+            line-height: 1.7;
+        }
+        
+        .cta-btns {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold-light));
+            color: var(--black);
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: transform 0.25s, box-shadow 0.25s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(201, 168, 76, 0.35);
+        }
+        
+        .btn-primary svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--black);
+        }
+        
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 13px 32px;
+            background: transparent;
+            color: var(--white);
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 4px;
+            border: 1px solid rgba(201, 168, 76, 0.4);
+            transition: border-color 0.25s, color 0.25s;
+        }
+        
+        .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+        
+        .btn-outline svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+        /* MOBILE MENU */
+        
+        .mobile-menu {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            background: rgba(10, 10, 10, 0.98);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        .mobile-menu a {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .mobile-menu a:hover {
+            color: var(--gold);
+        }
+        
+        .mobile-close {
+            position: absolute;
+            bottom: 20px;
+            right: 6%;
+            font-size: 2rem;
+            color: var(--white);
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* REVEAL */
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s, transform 0.7s;
+        }
+        
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+        /* TOAST */
+        
+        .toast {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: var(--dark2);
+            border: 1px solid rgba(201, 168, 76, 0.3);
+            border-radius: 10px;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.88rem;
+            color: var(--white2);
+            z-index: 8000;
+            transition: transform 0.4s, opacity 0.4s;
+            opacity: 0;
+            white-space: nowrap;
+        }
+        
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        
+        .toast svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--gold);
+            fill: none;
+            stroke-width: 2;
+        }
+        /* RESPONSIVE */
+        
+        @media (max-width: 900px) {
+            .nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .section-header {
+                flex-direction: column;
+                gap: 16px;
+            }
+            .img-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 10px;
+            }
+            .snav-tab {
+                padding: 14px 16px;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-close" id="mobileClose">✕</button>
+        <a href="index.html">Accueil</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#contact">Contact</a>
+    </div>
+
+    <!-- NAV -->
+    <nav>
+        <a class="nav-logo" href="index.html">
+            <div class="nav-logo-icon">
+                <svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
+            </div>
+            <span class="nav-logo-text">Mr<span>.</span>Tech</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="index.html#contact" class="nav-cta">Nous Contacter</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger" onclick="openMobile()">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <div class="page-hero">
+        <div class="page-hero-grid"></div>
+        <div class="breadcrumb">
+            <a href="index.html">Accueil</a>
+            <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg> Galerie Prestations
+        </div>
+        <h1 class="page-title">Galerie de nos <span class="accent">Réalisations</span></h1>
+        <p class="page-sub">Découvrez l'ensemble de nos prestations illustrées. Cliquez sur chaque cadre pour y ajouter vos images.</p>
+    </div>
+
+    <!-- STICKY SECTION NAV -->
+    <div class="section-nav" id="sectionNav">
+        <div class="section-nav-inner">
+            <a href="#maintenance" class="snav-tab active" data-target="maintenance">
+                <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg> Maintenance
+            </a>
+            <a href="#logiciels" class="snav-tab" data-target="logiciels">
+                <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Logiciels
+            </a>
+            <a href="#android" class="snav-tab" data-target="android">
+                <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> Android
+            </a>
+            <a href="#web" class="snav-tab" data-target="web">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Sites Web
+            </a>
+            <a href="#disques" class="snav-tab" data-target="disques">
+                <svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg> Disques & USB
+            </a>
+        </div>
+    </div>
+
+    <!-- ═══ SECTION 1 : MAINTENANCE ═══ -->
+    <section class="prestation-section" id="maintenance">
+        <div class="section-header reveal">
+            <div class="section-icon-big">
+                <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            </div>
+            <div class="section-header-text">
+                <div class="section-tag">— Prestation 01 —</div>
+                <h2 class="section-title">Maintenance & Optimisation</h2>
+                <p class="section-desc">Réinstallation Windows, sécurité antivirus, nettoyage et boost PC.</p>
+                <div class="gold-line"></div>
+            </div>
+        </div>
+        <div class="img-grid reveal" id="grid-maint">
+            <div class="img-card">
+                <img src="4.jpg" alt="Maintenance 01">
+            </div>
+            <div class="img-card">
+                <img src="1.jpg" alt="Maintenance 02">
+            </div>
+            <div class="img-card">
+                <img src="3.jpg" alt="Maintenance 03">
+            </div>
+            <div class="img-card">
+                <img src="5.jpg" alt="Maintenance 04">
+            </div>
+            <div class="img-card">
+                <img src="0.jpg" alt="Maintenance 05">
+            </div>
+            <div class="img-card">
+                <img src="w.png" alt="Maintenance 06">
+            </div>
+            <div class="img-card">
+                <img src="windowsFaild.jpg" alt="Maintenance 07">
+            </div>
+            <div class="img-card">
+                <img src="windowsS.jpg" alt="Maintenance 08">
+            </div>
+            <div class="img-card">
+                <img src="7.jpg" alt="Maintenance 09">
+            </div>
+            <div class="img-card">
+                <img src="V1.jpg" alt="Maintenance 10">
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ═══ SECTION 2 : LOGICIELS ═══ -->
+    <section class="prestation-section" id="logiciels">
+        <div class="section-header reveal">
+            <div class="section-icon-big">
+                <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <div class="section-header-text">
+                <div class="section-tag">— Prestation 02 —</div>
+                <h2 class="section-title">Logiciels & Téléchargements</h2>
+                <p class="section-desc">Logiciels professionnels, jeux PC, configuration et compatibilité. AutoCAD, Photoshop, Office, FIFA, GTA et plus.</p>
+                <div class="gold-line"></div>
+            </div>
+        </div>
+        <div class="img-grid reveal" id="grid-logi">
+            <div class="img-card">
+                <img src="office.jpg" alt="Logiciels 01">
+            </div>
+            <div class="img-card">
+                <img src="office.jpeg" alt="Logiciels 02">
+            </div>
+            <div class="img-card">
+                <img src="20.png" alt="Logiciels 03">
+            </div>
+            <div class="img-card">
+                <img src="AutoCad.jpg" alt="Logiciels 04">
+            </div>
+            <div class="img-card">
+                <img src="Tia.png" alt="Logiciels 05">
+            </div>
+            <div class="img-card">
+                <img src="T.png" alt="Logiciels 06">
+            </div>
+            <div class="img-card">
+                <img src="Na.jpeg" alt="Logiciels 07">
+            </div>
+            <div class="img-card">
+                <img src="blur.jpg" alt="Logiciels 08">
+            </div>
+            <div class="img-card">
+                <img src="FI.png" alt="Logiciels 09">
+            </div>
+            <div class="img-card">
+                <img src="Te.png" alt="Logiciels 10">
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ═══ SECTION 3 : ANDROID ═══ -->
+    <section class="prestation-section" id="android">
+        <div class="section-header reveal">
+            <div class="section-icon-big">
+                <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+            </div>
+            <div class="section-header-text">
+                <div class="section-tag">— Prestation 03 —</div>
+                <h2 class="section-title">Déverrouillage Android</h2>
+                <p class="section-desc">Unlock téléphones Android, flashage, remise à zéro. Nous traitons les marques et modèles Android.</p>
+                <div class="gold-line"></div>
+            </div>
+        </div>
+        <div class="img-grid reveal" id="grid-android">
+            <div class="img-card">
+                <img src="fr.jpg" alt="Android 01">
+            </div>
+            <div class="img-card">
+                <img src="FRp.jpg" alt="Android 02">
+            </div>
+            <div class="img-card">
+                <img src="nb.jpg" alt="Android 03">
+            </div>
+            <div class="img-card">
+                <img src="R.png" alt="Android 04">
+            </div>
+            <div class="img-card">
+                <img src="Ri.png" alt="Android 05">
+            </div>
+            <div class="img-card">
+                <img src="O.jpg" alt="Android 06">
+            </div>
+            <div class="img-card">
+                <img src="An.jpg" alt="Android 07">
+            </div>
+            <div class="img-card">
+                <img src="Ro.jpg" alt="Android 08">
+            </div>
+            <div class="img-card">
+                <img src="Sam.jpg" alt="Android 09">
+            </div>
+            <div class="img-card">
+                <img src="go.jpg" alt="Android 10">
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ═══ SECTION 4 : SITES WEB ═══ -->
+    <section class="prestation-section" id="web">
+        <div class="section-header reveal">
+            <div class="section-icon-big">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <div class="section-header-text">
+                <div class="section-tag">— Prestation 04 —</div>
+                <h2 class="section-title">Création de Sites Web</h2>
+                <p class="section-desc">Sites vitrine, portfolio, landing page. Design moderne, responsive et déploiement rapide et personnalisé.</p>
+                <div class="gold-line"></div>
+            </div>
+        </div>
+        <div class="img-grid reveal" id="grid-web">
+            <div class="img-card">
+                <img src="web.jpg" alt="Web 01">
+            </div>
+            <div class="img-card">
+                <img src="web1.jpg" alt="Web 02">
+            </div>
+            <div class="img-card">
+                <img src="web2.jpg" alt="Web 03">
+            </div>
+            <div class="img-card">
+                <img src="web3.jpg" alt="Web 04">
+            </div>
+            <div class="img-card">
+                <img src="load.jpg" alt="Web 05">
+            </div>
+            <div class="img-card">
+                <img src="load1.jpg" alt="Web 06">
+            </div>
+            <div class="img-card">
+                <img src="Port.jpg" alt="Web 07">
+            </div>
+            <div class="img-card">
+                <img src="port1.jpg" alt="Web 08">
+            </div>
+            <div class="img-card">
+                <img src="port2.jpg" alt="Web 09">
+            </div>
+            <div class="img-card">
+                <img src="web9.jpg" alt="Web 10">
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ SECTION 5 : DISQUES ═══ -->
+    <section class="prestation-section" id="disques">
+        <div class="section-header reveal">
+            <div class="section-icon-big">
+                <svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            </div>
+            <div class="section-header-text">
+                <div class="section-tag">— Prestation 05 —</div>
+                <h2 class="section-title">Disques & USB</h2>
+                <p class="section-desc">Réparation, récupération de données et optimisation de disques durs et clés USB. Intervention rapide.</p>
+                <div class="gold-line"></div>
+            </div>
+        </div>
+        <div class="img-grid reveal" id="grid-disques">
+            <div class="img-card">
+                <img src="12.jpg" alt="Disques 01">
+            </div>
+            <div class="img-card">
+                <img src="21.png" alt="Disques 02">
+            </div>
+            <div class="img-card">
+                <img src="usb.jpg" alt="Disques 03">
+            </div>
+            <div class="img-card">
+                <img src="22.png" alt="Disques 04">
+            </div>
+            <div class="img-card">
+                <img src="23.png" alt="Disques 05">
+            </div>
+            <div class="img-card">
+                <img src="25.png" alt="Disques 06">
+            </div>
+            <div class="img-card">
+                <img src="27.png" alt="Disques 07">
+            </div>
+            <div class="img-card">
+                <img src="28.png" alt="Disques 08">
+            </div>
+            <div class="img-card">
+                <img src="D.jpg" alt="Disques 09">
+            </div>
+            <div class="img-card">
+                <img src="14.jpg" alt="Disques 10">
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER CTA -->
+    <div class="page-footer-cta">
+        <h3>Besoin d'un de ces services ?</h3>
+        <p>Contactez Mr.Tech directement via WhatsApp ou par email. Réponse rapide garantie.</p>
+        <div class="cta-btns">
+            <a href="index.html#contact" class="btn-primary">
+                <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Décrire mon problème
+            </a>
+            <a href="index.html" class="btn-outline">
+                <svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg> Retour à l'accueil
+            </a>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+        <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+        <img src="" alt="" id="lightboxImg">
+        <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast">
+        <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <span id="toastText">Image ajoutée !</span>
+    </div>
+
+    <script>
+        // ─── CONFIG SECTIONS ───
+        const SECTIONS = [{
+            id: 'maint',
+            grid: 'grid-maint',
+            label: 'Maintenance & Optimisation',
+            count: 10
+        }, {
+            id: 'logi',
+            grid: 'grid-logi',
+            label: 'Logiciels & Téléchargements',
+            count: 10
+        }, {
+            id: 'android',
+            grid: 'grid-android',
+            label: 'Déverrouillage Android',
+            count: 10
+        }, {
+            id: 'web',
+            grid: 'grid-web',
+            label: 'Création de Sites Web',
+            count: 10
+        }, {
+            id: 'disques',
+            grid: 'grid-disques',
+            label: 'Disques & USB',
+            count: 10
+        }];
+
+
+        // ─── BUILD GRIDS ───
+        function buildGrids() {
+            SECTIONS.forEach(sec => {
+                const grid = document.getElementById(sec.grid);
+                for (let i = 1; i <= sec.count; i++) {
+                    const uid = `${sec.id}-${i}`;
+                    grid.innerHTML += `
+            <div class="img-card" id="card-${uid}" onclick="handleCardClick('${uid}')">
+                <img src="" alt="${sec.label} ${i}" id="img-${uid}">
+                <div class="img-card-overlay"></div>
+                <div class="img-card-placeholder">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    Ajouter
+                </div>
+                <div class="img-card-num">${String(i).padStart(2,'0')}</div>
+                <div class="img-card-actions">
+                    <button class="img-action-btn" title="Changer" onclick="event.stopPropagation();triggerInput('${uid}')">
+                        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    </button>
+                    <button class="img-action-btn del" title="Supprimer" onclick="event.stopPropagation();clearCard('${uid}')">
+                        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
+                <input type="file" class="hidden-input" id="input-${uid}" accept="image/*" onchange="loadCardImg('${uid}',this)">
+            </div>`;
+                }
+            });
+        }
+
+        // buildGrids();
+
+        // ─── CARD INTERACTIONS ───
+        function handleCardClick(uid) {
+            const card = document.getElementById('card-' + uid);
+            if (card.classList.contains('has-img')) {
+                // open lightbox
+                const img = document.getElementById('img-' + uid);
+                openLightbox(img.src, img.alt);
+            } else {
+                triggerInput(uid);
+            }
+        }
+
+
+
+        function loadCardImg(uid, input) {
+            if (!input.files || !input.files[0]) return;
+            const file = input.files[0];
+            if (!file.type.startsWith('image/')) {
+                showToast('Fichier invalide — choisissez une image.');
+                return;
+            }
+            if (file.size > 10 * 1024 * 1024) {
+                showToast('Image trop lourde (max 10 Mo).');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = e => {
+                const card = document.getElementById('card-' + uid);
+                const img = document.getElementById('img-' + uid);
+                img.src = e.target.result;
+                card.classList.add('has-img');
+                showToast('Image ajoutée avec succès ✓');
+            };
+            reader.readAsDataURL(file);
+            input.value = '';
+        }
+
+        function clearCard(uid) {
+            const card = document.getElementById('card-' + uid);
+            const img = document.getElementById('img-' + uid);
+            img.src = '';
+            card.classList.remove('has-img');
+            showToast('Image supprimée.');
+        }
+
+        // ─── LIGHTBOX ───
+        function openLightbox(src, caption) {
+            document.getElementById('lightboxImg').src = src;
+            document.getElementById('lightboxCaption').textContent = caption;
+            document.getElementById('lightbox').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox(e) {
+            if (e && e.target !== document.getElementById('lightbox') && !e.target.classList.contains('lightbox-close')) return;
+            if (!e) {
+                document.getElementById('lightbox').classList.remove('open');
+                document.body.style.overflow = '';
+            } else {
+                document.getElementById('lightbox').classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                document.getElementById('lightbox').classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // ─── TOAST ───
+        let toastTimer;
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            document.getElementById('toastText').textContent = msg;
+            t.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+        }
+
+        // ─── MOBILE MENU ───
+        function openMobile() {
+            document.getElementById('mobileMenu').classList.add('open');
+        }
+
+        function closeMobile() {
+            document.getElementById('mobileMenu').classList.remove('open');
+        }
+        document.getElementById('mobileClose').onclick = closeMobile;
+
+        // ─── SCROLL REVEAL ───
+        const revealObs = new IntersectionObserver(entries => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) {
+                    e.target.style.transitionDelay = (i * 0.05) + 's';
+                    e.target.classList.add('visible');
+                    revealObs.unobserve(e.target);
+                }
+            });
+        }, {
+            threshold: 0.08
+        });
+        document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+        // ─── STICKY TAB ACTIVE STATE ───
+        const sections = [{
+            id: 'maintenance',
+            tab: 'maintenance'
+        }, {
+            id: 'logiciels',
+            tab: 'logiciels'
+        }, {
+            id: 'android',
+            tab: 'android'
+        }, {
+            id: 'web',
+            tab: 'web'
+        }, {
+            id: 'disques',
+            tab: 'disques'
+        }];
+
+        const navHeight = () => (document.getElementById('sectionNav').getBoundingClientRect().bottom || 130);
+
+        const sectionObs = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    document.querySelectorAll('.snav-tab').forEach(t => {
+                        t.classList.toggle('active', t.dataset.target === id);
+                    });
+                }
+            });
+        }, {
+            rootMargin: '-30% 0px -60% 0px'
+        });
+
+        sections.forEach(s => {
+            const el = document.getElementById(s.id);
+            if (el) sectionObs.observe(el);
+        });
+    </script>
+</body>
+
+</html>
